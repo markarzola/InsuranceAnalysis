@@ -1,0 +1,42 @@
+---
+title: "Insurance Cost Analysis"
+author: "Mark Arzola"
+date: "2023-11-16"
+output: html_document
+---
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+
+install.packages("ggplot2", repos = "https://cran.r-project.org")
+
+library(ggplot2)
+```
+
+```{r}
+setwd('/Users/markarzola/Desktop/portfolio projects/Insurance Analysis Project')
+df <- read.csv('insurance.csv', header=TRUE)
+head(df)
+```
+```{r}
+numericdata <- df[ , c(1,3,4,7)]
+plot(numericdata, col = "lightblue")
+```
+```{r}
+round(cor(numericdata),2)
+```
+```{r}
+smoker = as.factor(df$smoker)
+sex = as.factor(df$sex)
+region = as.factor(df$region)
+
+boxplot(df$charges ~ smoker, main = 'smoker', col = "lightblue")
+boxplot(df$charges ~ sex, main = 'sex', col = "lightblue")
+boxplot(df$charges ~ region, main = 'region', col = "lightblue")
+```
+
+```{r}
+model1 = lm(charges ~., data = df)
+summary(model1)
+```
+
+
